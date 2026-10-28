@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire工具箱 · 下载安装程序</title>
+    <style>
+        :root{
+            --bg:#0a0f1e;
+            --card:#131d38;
+            --border:#233156;
+            --text:#e8edf7;
+            --muted:#8fa0c4;
+            --accent:#4ea1ff;
+            --accent-2:#6effa0;
+            --warn:#ffb347;
+            --danger:#ff5c5c;
+            --radius:14px;
+            --mono:"Consolas","Menlo",monospace;
+        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        html{scroll-behavior:smooth;}
+        body{
+            font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+            background:
+                    radial-gradient(1100px 560px at 15% -10%, #14224a 0%, transparent 60%),
+                    radial-gradient(900px 480px at 110% 0%, #102a2a 0%, transparent 55%),
+                    var(--bg);
+            color:var(--text);min-height:100vh;line-height:1.6;
+        }
+        a{color:var(--accent);text-decoration:none;}
+        a:hover{text-decoration:underline;}
+
+        header{
+            position:sticky;top:0;z-index:20;
+            backdrop-filter:blur(12px);
+            background:rgba(10,15,30,.72);
+            border-bottom:1px solid var(--border);
+        }
+        .nav{
+            max-width:1100px;margin:0 auto;padding:14px 24px;
+            display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+        }
+        .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;}
+        .brand .logo{
+            width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+            font-size:17px;background:linear-gradient(135deg,#ff7a2f,#ff3d3d);
+            box-shadow:0 0 20px rgba(255,90,40,.45);
+        }
+        .nav-right{display:flex;align-items:center;gap:12px;}
+        .pill{
+            font-family:var(--mono);font-size:12px;
+            border:1px solid rgba(110,255,160,.35);
+            background:rgba(110,255,160,.08);
+            color:var(--accent-2);
+            padding:4px 10px;border-radius:999px;white-space:nowrap;
+        }
+        select.lang{
+            background:var(--card);color:var(--text);
+            border:1px solid var(--border);border-radius:9px;
+            padding:7px 10px;font-size:14px;cursor:pointer;outline:none;
+        }
+        select.lang:focus{border-color:var(--accent);}
+
+        .hero{max-width:1100px;margin:0 auto;padding:64px 24px 32px;text-align:center;}
+        .hero h1{
+            font-size:clamp(30px,5vw,48px);font-weight:800;letter-spacing:.5px;
+            background:linear-gradient(135deg,#fff 30%,#7fb5ff 100%);
+            -webkit-background-clip:text;background-clip:text;color:transparent;
+        }
+        .hero p.sub{margin-top:14px;color:var(--muted);font-size:17px;}
+        .hero .meta{
+            margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+            font-size:13px;color:var(--muted);
+        }
+        .hero .meta span{
+            border:1px solid var(--border);background:var(--card);
+            padding:4px 10px;border-radius:999px;
+        }
+
+        section{max-width:1100px;margin:0 auto;padding:36px 24px;}
+        .section-title{
+            font-size:22px;font-weight:700;margin-bottom:16px;
+            display:flex;align-items:center;gap:10px;
+        }
+        .section-title::before{
+            content:"";width:5px;height:22px;border-radius:3px;
+            background:linear-gradient(180deg,var(--accent),#2b6ce0);
+        }
+
+        .grid{
+            display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap:18px;
+        }
+        .card{
+            background:var(--card);border:1px solid var(--border);
+            border-radius:var(--radius);padding:22px;
+            display:flex;flex-direction:column;gap:14px;
+            transition:border-color .2s ease, transform .2s ease;
+        }
+        .card:hover{border-color:#34508f;transform:translateY(-2px);}
+        .card h3{font-size:18px;display:flex;align-items:center;gap:8px;}
+        .card .tag{
+            font-size:11px;font-family:var(--mono);
+            padding:2px 8px;border-radius:999px;font-weight:600;
+        }
+        .tag.stable{background:rgba(110,255,160,.12);color:var(--accent-2);border:1px solid rgba(110,255,160,.35);}
+        .tag.dev{background:rgba(255,179,71,.12);color:var(--warn);border:1px solid rgba(255,179,71,.35);}
+        .card p{color:var(--muted);font-size:14px;}
+        .file-row{
+            display:flex;justify-content:space-between;align-items:center;gap:10px;
+            font-family:var(--mono);font-size:12.5px;
+            border:1px dashed var(--border);border-radius:9px;
+            padding:8px 10px;color:var(--muted);
+        }
+        .file-row b{color:var(--text);font-weight:600;}
+
+        .btn{
+            display:inline-flex;align-items:center;justify-content:center;gap:8px;
+            padding:12px 18px;border-radius:10px;font-weight:700;font-size:15px;
+            border:none;cursor:pointer;transition:filter .2s ease, transform .15s ease;
+            font-family:inherit;text-decoration:none !important;
+        }
+        .btn:active{transform:scale(.98);}
+        .btn.primary{
+            background:linear-gradient(135deg,#4ea1ff,#2b6ce0);
+            color:#fff;box-shadow:0 8px 24px -10px rgba(78,161,255,.65);
+        }
+        .btn.primary:hover{filter:brightness(1.08);}
+        .btn.disabled{
+            background:#1c2745;color:var(--muted);cursor:not-allowed;
+            border:1px dashed var(--border);
+        }
+
+        .notice{
+            display:flex;gap:12px;align-items:flex-start;
+            border:1px solid rgba(255,179,71,.35);
+            background:rgba(255,179,71,.08);
+            color:#ffe1b0;border-radius:var(--radius);
+            padding:14px 16px;font-size:14px;
+        }
+        .notice .icon{
+            flex:0 0 auto;width:22px;height:22px;border-radius:50%;
+            display:grid;place-items:center;
+            background:rgba(255,179,71,.2);color:var(--warn);font-weight:800;
+        }
+
+        ol.steps{list-style:none;counter-reset:s;display:grid;gap:12px;}
+        ol.steps li{
+            counter-increment:s;
+            display:flex;gap:14px;align-items:flex-start;
+            background:var(--card);border:1px solid var(--border);
+            border-radius:12px;padding:14px 16px;font-size:14.5px;
+        }
+        ol.steps li::before{
+            content:counter(s);
+            flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+            display:grid;place-items:center;font-weight:800;font-size:13px;
+            background:rgba(78,161,255,.18);color:var(--accent);
+        }
+        code{
+            font-family:var(--mono);font-size:12.5px;
+            background:#0e1730;border:1px solid var(--border);
+            padding:1px 6px;border-radius:6px;color:#bcd4ff;
+        }
+
+        footer{
+            border-top:1px solid var(--border);
+            margin-top:40px;padding:22px 24px;text-align:center;
+            color:var(--muted);font-size:13px;
+        }
+        footer .ver{font-family:var(--mono);}
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="nav">
+        <div class="brand"><span class="logo">🔥</span><span data-i18n="site.title">Fire工具箱</span></div>
+        <div class="nav-right">
+            <span class="pill" id="navVersion">v1.0-Snapshot-1</span>
+            <select class="lang" id="langSelect">
+                <option value="zh_cn">中文</option>
+                <option value="zh_tw">中文（繁體）</option>
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+            </select>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="hero">
+        <h1 data-i18n="hero.title">Fire工具箱</h1>
+        <p class="sub" data-i18n="hero.sub">下载安装程序，双击即可安装。安装完成后自动创建桌面快捷方式，一键启动。</p>
+        <div class="meta">
+            <span data-i18n="hero.meta.ver">版本：v1.0-Snapshot-1（稳定）</span>
+            <span data-i18n="hero.meta.next">下一版：v1.0-Snapshot-2（开发中）</span>
+            <span data-i18n="hero.meta.req">需要 Java 11+</span>
+        </div>
+    </div>
+
+    <section>
+        <h2 class="section-title" data-i18n="dl.title">下载安装程序</h2>
+
+        <div class="grid">
+            <!-- 稳定版安装程序 -->
+            <div class="card">
+                <h3>
+                    <span data-i18n="dl.stable.name">Fire工具箱 安装程序</span>
+                    <span class="tag stable" data-i18n="dl.stable.tag">稳定版</span>
+                </h3>
+                <p data-i18n="dl.stable.desc">
+                    下载后双击即可打开安装向导，选择安装目录后自动释放程序文件，并创建桌面快捷方式。
+                </p>
+
+                <div class="file-row">
+                    <span>FireToolboxInstaller.jar</span>
+                    <b>v1.0-Snapshot-1</b>
+                </div>
+
+                <a class="btn primary" id="dlStable" download>
+                    <span data-i18n="dl.stable.btn">下载安装程序 v1.0-Snapshot-1</span>
+                </a>
+            </div>
+
+            <!-- 开发版 -->
+            <div class="card">
+                <h3>
+                    <span data-i18n="dl.dev.name">Fire工具箱 安装程序</span>
+                    <span class="tag dev" data-i18n="dl.dev.tag">开发中</span>
+                </h3>
+                <p data-i18n="dl.dev.desc">
+                    v1.0-Snapshot-2 正在开发：新增繁体中文、俄语语言数据包、插件系统改进等，目前尚未发布。
+                </p>
+
+                <div class="file-row">
+                    <span>FireToolboxInstaller.jar</span>
+                    <b>v1.0-Snapshot-2</b>
+                </div>
+
+                <button class="btn disabled" disabled>
+                    <span data-i18n="dl.dev.btn">暂不可下载</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="notice" style="margin-top:18px;">
+            <div class="icon">!</div>
+            <div data-i18n="dl.notice">
+                下载的是 <b>v1.0-Snapshot-1 安装程序</b>。双击 <code>FireToolboxInstaller.jar</code> 启动安装向导，
+                安装完成后可在桌面看到「Fire工具箱」快捷方式。
+                v1.0-Snapshot-2 完成后会在此页面更新。
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title" data-i18n="install.title">安装步骤</h2>
+        <ol class="steps">
+            <li data-i18n="install.s1">确保已安装 <b>Java 11 或更高版本</b>（JDK/JRE 均可，安装程序与主程序都依赖它）。</li>
+            <li data-i18n="install.s2">下载 <code>FireToolboxInstaller.jar</code>。</li>
+            <li data-i18n="install.s3">双击该 jar，弹出安装向导；选择安装目录（默认 <code>%LOCALAPPDATA%\\FireToolbox</code>）。</li>
+            <li data-i18n="install.s4">点击「安装」，等待进度条完成。安装程序会自动释放主程序文件并生成 <code>启动.bat</code>。</li>
+            <li data-i18n="install.s5">勾选「创建桌面快捷方式」后，桌面会出现「Fire工具箱」；勾选「安装完成后启动」可立即打开。</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2 class="section-title" data-i18n="req.title">运行要求</h2>
+        <ol class="steps">
+            <li data-i18n="req.s1"><b>操作系统：</b>Windows 10/11（其他系统需手动运行 jar）。</li>
+            <li data-i18n="req.s2"><b>Java：</b>11 或更高版本，需能从命令行调用 <code>java</code>。</li>
+            <li data-i18n="req.s3"><b>磁盘：</b>安装目录约需 20 MB（含内置资源与语言包）。</li>
+            <li data-i18n="req.s4">若双击 jar 无反应，请检查 <code>.jar</code> 是否关联到 <code>javaw.exe</code>（见下方常见问题）。</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2 class="section-title" data-i18n="faq.title">常见问题</h2>
+        <div class="grid">
+            <div class="card">
+                <h3 data-i18n="faq.q1.title">双击 jar 没有反应？</h3>
+                <p data-i18n="faq.q1.desc">
+                    通常是 .jar 没有关联到 Java。右键 jar →「打开方式」→ 选择 JDK/JRE 目录下的 javaw.exe，
+                    勾选「始终使用此应用打开 .jar 文件」。
+                </p>
+            </div>
+            <div class="card">
+                <h3 data-i18n="faq.q2.title">安装后启动崩溃？</h3>
+                <p data-i18n="faq.q2.desc">
+                    检查安装目录下是否有 Config.ini。程序要求 Config.ini 存在，缺失会主动崩溃并写入
+                    resources/log/crash.log。
+                </p>
+            </div>
+            <div class="card">
+                <h3 data-i18n="faq.q3.title">如何切换语言？</h3>
+                <p data-i18n="faq.q3.desc">
+                    打开程序 →「设置」→ 语言，可选简体中文、繁体中文、英文、俄语。切换后点「保存」写入 Config.ini。
+                </p>
+            </div>
+            <div class="card">
+                <h3 data-i18n="faq.q4.title">如何卸载？</h3>
+                <p data-i18n="faq.q4.desc">
+                    直接删除安装目录，并删除桌面「Fire工具箱」快捷方式即可。程序不在系统其他位置写入文件。
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div><span data-i18n="footer.publish">当前发布版本</span>：<span class="ver" id="footVersion">v1.0-Snapshot-1</span></div>
+    <div style="margin-top:4px;"><span data-i18n="footer.next">下一版本</span>：<span class="ver">v1.0-Snapshot-2</span> · <span data-i18n="footer.dev">开发中，尚未发布</span></div>
+</footer>
+
+<script>
+    /* =====================================================================
+     * 下载目标：安装程序 jar
+     * ---------------------------------------------------------------------
+     * 默认假设 index.html 与 FireToolboxInstaller.jar 在同一目录。
+     * 如需改路径，改这一行即可。
+     * ===================================================================== */
+    const DOWNLOAD_URL = "./FireToolboxInstaller.jar";
+
+    const I18N = {
+        zh_cn: {
+            "site.title": "Fire工具箱",
+            "hero.title": "Fire工具箱",
+            "hero.sub": "下载安装程序，双击即可安装。安装完成后自动创建桌面快捷方式，一键启动。",
+            "hero.meta.ver": "版本：v1.0-Snapshot-1（稳定）",
+            "hero.meta.next": "下一版：v1.0-Snapshot-2（开发中）",
+            "hero.meta.req": "需要 Java 11+",
+            "dl.title": "下载安装程序",
+            "dl.stable.name": "Fire工具箱 安装程序",
+            "dl.stable.tag": "稳定版",
+            "dl.stable.desc": "下载后双击即可打开安装向导，选择安装目录后自动释放程序文件，并创建桌面快捷方式。",
+            "dl.stable.btn": "下载安装程序 v1.0-Snapshot-1",
+            "dl.dev.name": "Fire工具箱 安装程序",
+            "dl.dev.tag": "开发中",
+            "dl.dev.desc": "v1.0-Snapshot-2 正在开发：新增繁体中文、俄语语言数据包、插件系统改进等，目前尚未发布。",
+            "dl.dev.btn": "暂不可下载",
+            "dl.notice": "下载的是 v1.0-Snapshot-1 安装程序。双击 FireToolboxInstaller.jar 启动安装向导，安装完成后可在桌面看到「Fire工具箱」快捷方式。v1.0-Snapshot-2 完成后会在此页面更新。",
+            "install.title": "安装步骤",
+            "install.s1": "确保已安装 Java 11 或更高版本（JDK/JRE 均可，安装程序与主程序都依赖它）。",
+            "install.s2": "下载 FireToolboxInstaller.jar。",
+            "install.s3": "双击该 jar，弹出安装向导；选择安装目录（默认 %LOCALAPPDATA%\\FireToolbox）。",
+            "install.s4": "点击「安装」，等待进度条完成。安装程序会自动释放主程序文件并生成 启动.bat。",
+            "install.s5": "勾选「创建桌面快捷方式」后，桌面会出现「Fire工具箱」；勾选「安装完成后启动」可立即打开。",
+            "req.title": "运行要求",
+            "req.s1": "操作系统：Windows 10/11（其他系统需手动运行 jar）。",
+            "req.s2": "Java：11 或更高版本，需能从命令行调用 java。",
+            "req.s3": "磁盘：安装目录约需 20 MB（含内置资源与语言包）。",
+            "req.s4": "若双击 jar 无反应，请检查 .jar 是否关联到 javaw.exe。",
+            "faq.title": "常见问题",
+            "faq.q1.title": "双击 jar 没有反应？",
+            "faq.q1.desc": "通常是 .jar 没有关联到 Java。右键 jar →「打开方式」→ 选择 JDK/JRE 目录下的 javaw.exe，勾选「始终使用此应用打开 .jar 文件」。",
+            "faq.q2.title": "安装后启动崩溃？",
+            "faq.q2.desc": "检查安装目录下是否有 Config.ini。程序要求 Config.ini 存在，缺失会主动崩溃并写入 resources/log/crash.log。",
+            "faq.q3.title": "如何切换语言？",
+            "faq.q3.desc": "打开程序 →「设置」→ 语言，可选简体中文、繁体中文、英文、俄语。切换后点「保存」写入 Config.ini。",
+            "faq.q4.title": "如何卸载？",
+            "faq.q4.desc": "直接删除安装目录，并删除桌面「Fire工具箱」快捷方式即可。程序不在系统其他位置写入文件。",
+            "footer.publish": "当前发布版本",
+            "footer.next": "下一版本",
+            "footer.dev": "开发中，尚未发布"
+        },
+
+        zh_tw: {
+            "site.title": "Fire工具箱",
+            "hero.title": "Fire工具箱",
+            "hero.sub": "下載安裝程式，雙擊即可安裝。安裝完成後自動建立桌面捷徑，一鍵啟動。",
+            "hero.meta.ver": "版本：v1.0-Snapshot-1（穩定）",
+            "hero.meta.next": "下一版：v1.0-Snapshot-2（開發中）",
+            "hero.meta.req": "需要 Java 11+",
+            "dl.title": "下載安裝程式",
+            "dl.stable.name": "Fire工具箱 安裝程式",
+            "dl.stable.tag": "穩定版",
+            "dl.stable.desc": "下載後雙擊即可開啟安裝精靈，選擇安裝目錄後自動釋出程式檔案，並建立桌面捷徑。",
+            "dl.stable.btn": "下載安裝程式 v1.0-Snapshot-1",
+            "dl.dev.name": "Fire工具箱 安裝程式",
+            "dl.dev.tag": "開發中",
+            "dl.dev.desc": "v1.0-Snapshot-2 正在開發：新增繁體中文、俄語語言資料包、外掛系統改進等，目前尚未發佈。",
+            "dl.dev.btn": "暫不可下載",
+            "dl.notice": "下載的是 v1.0-Snapshot-1 安裝程式。雙擊 FireToolboxInstaller.jar 開啟安裝精靈，安裝完成後可在桌面看到「Fire工具箱」捷徑。v1.0-Snapshot-2 完成後會在此頁面更新。",
+            "install.title": "安裝步驟",
+            "install.s1": "確認已安裝 Java 11 或更高版本（JDK/JRE 皆可，安裝程式與主程式都依賴它）。",
+            "install.s2": "下載 FireToolboxInstaller.jar。",
+            "install.s3": "雙擊該 jar，開啟安裝精靈；選擇安裝目錄（預設 %LOCALAPPDATA%\\FireToolbox）。",
+            "install.s4": "點擊「安裝」，等待進度條完成。安裝程式會自動釋出主程式檔案並產生 啟動.bat。",
+            "install.s5": "勾選「建立桌面捷徑」後，桌面會出現「Fire工具箱」；勾選「安裝完成後啟動」可立即開啟。",
+            "req.title": "執行需求",
+            "req.s1": "作業系統：Windows 10/11（其他系統需手動執行 jar）。",
+            "req.s2": "Java：11 或更高版本，需能從命令列呼叫 java。",
+            "req.s3": "磁碟：安裝目錄約需 20 MB（含內建資源與語言包）。",
+            "req.s4": "若雙擊 jar 無反應，請檢查 .jar 是否關聯到 javaw.exe。",
+            "faq.title": "常見問題",
+            "faq.q1.title": "雙擊 jar 沒有反應？",
+            "faq.q1.desc": "通常是 .jar 沒有關聯到 Java。右鍵 jar →「開啟方式」→ 選擇 JDK/JRE 目錄下的 javaw.exe，勾選「一律使用此應用程式開啟 .jar 檔案」。",
+            "faq.q2.title": "安裝後啟動崩潰？",
+            "faq.q2.desc": "檢查安裝目錄下是否有 Config.ini。程式要求 Config.ini 存在，缺失會主動崩潰並寫入 resources/log/crash.log。",
+            "faq.q3.title": "如何切換語言？",
+            "faq.q3.desc": "開啟程式 →「設定」→ 語言，可選簡體中文、繁體中文、英文、俄語。切換後點「儲存」寫入 Config.ini。",
+            "faq.q4.title": "如何解除安裝？",
+            "faq.q4.desc": "直接刪除安裝目錄，並刪除桌面「Fire工具箱」捷徑即可。程式不會在系統其他位置寫入檔案。",
+            "footer.publish": "目前發佈版本",
+            "footer.next": "下一版本",
+            "footer.dev": "開發中，尚未發佈"
+        },
+
+        en: {
+            "site.title": "Fire Toolbox",
+            "hero.title": "Fire Toolbox",
+            "hero.sub": "Download the installer — double-click to install. The installer creates a desktop shortcut and launches the app when done.",
+            "hero.meta.ver": "Version: v1.0-Snapshot-1 (stable)",
+            "hero.meta.next": "Next: v1.0-Snapshot-2 (in development)",
+            "hero.meta.req": "Requires Java 11+",
+            "dl.title": "Download the installer",
+            "dl.stable.name": "Fire Toolbox Installer",
+            "dl.stable.tag": "Stable",
+            "dl.stable.desc": "Double-click the jar to open the install wizard. Pick a folder; the installer unpacks the app and creates a desktop shortcut.",
+            "dl.stable.btn": "Download installer v1.0-Snapshot-1",
+            "dl.dev.name": "Fire Toolbox Installer",
+            "dl.dev.tag": "In development",
+            "dl.dev.desc": "v1.0-Snapshot-2 is under development: Traditional Chinese, Russian language pack, plugin system improvements. Not yet released.",
+            "dl.dev.btn": "Not available yet",
+            "dl.notice": "You are downloading the v1.0-Snapshot-1 installer. Double-click FireToolboxInstaller.jar to launch the wizard; after installation, the \"Fire Toolbox\" shortcut appears on the desktop. v1.0-Snapshot-2 will be published here once ready.",
+            "install.title": "Installation steps",
+            "install.s1": "Make sure Java 11 or newer is installed (JDK or JRE — both the installer and the app need it).",
+            "install.s2": "Download FireToolboxInstaller.jar.",
+            "install.s3": "Double-click the jar. Pick an install folder (default: %LOCALAPPDATA%\\FireToolbox).",
+            "install.s4": "Click Install and wait for the progress bar. The installer unpacks the app and writes 启动.bat.",
+            "install.s5": "With \"Create desktop shortcut\" checked, a \"Fire Toolbox\" shortcut appears on the desktop. Check \"Launch after installation\" to open it immediately.",
+            "req.title": "Requirements",
+            "req.s1": "OS: Windows 10/11 (other systems must run the jar manually).",
+            "req.s2": "Java: 11 or newer, with java on PATH.",
+            "req.s3": "Disk: ~20 MB for the install folder (includes resources and language pack).",
+            "req.s4": "If double-clicking the jar does nothing, check that .jar is associated with javaw.exe.",
+            "faq.title": "FAQ",
+            "faq.q1.title": "Double-clicking the jar does nothing?",
+            "faq.q1.desc": "Windows has no .jar association. Right-click the jar → Open with → pick javaw.exe from your JDK/JRE, and check \"Always use this app to open .jar files\".",
+            "faq.q2.title": "App crashes after install?",
+            "faq.q2.desc": "Check that Config.ini exists in the install folder. The app requires Config.ini; without it the app will crash deliberately and write resources/log/crash.log.",
+            "faq.q3.title": "How do I change the language?",
+            "faq.q3.desc": "Open the app → Settings → Language. Choose Simplified Chinese, Traditional Chinese, English or Russian. Click Save to write Config.ini.",
+            "faq.q4.title": "How do I uninstall?",
+            "faq.q4.desc": "Delete the install folder and the \"Fire Toolbox\" desktop shortcut. The app does not write files elsewhere.",
+            "footer.publish": "Current release",
+            "footer.next": "Next version",
+            "footer.dev": "in development, not yet released"
+        },
+
+        ru: {
+            "site.title": "Fire Toolbox",
+            "hero.title": "Fire Toolbox",
+            "hero.sub": "Скачайте установщик — двойной щелчок запускает установку. Установщик создаёт ярлык на рабочем столе и запускает программу.",
+            "hero.meta.ver": "Версия: v1.0-Snapshot-1 (стабильная)",
+            "hero.meta.next": "Следующая: v1.0-Snapshot-2 (в разработке)",
+            "hero.meta.req": "Требуется Java 11+",
+            "dl.title": "Скачать установщик",
+            "dl.stable.name": "Установщик Fire Toolbox",
+            "dl.stable.tag": "Стабильная",
+            "dl.stable.desc": "Дважды щёлкните jar — откроется мастер установки. Выберите папку; установщик распакует файлы и создаст ярлык на рабочем столе.",
+            "dl.stable.btn": "Скачать установщик v1.0-Snapshot-1",
+            "dl.dev.name": "Установщик Fire Toolbox",
+            "dl.dev.tag": "В разработке",
+            "dl.dev.desc": "v1.0-Snapshot-2 в разработке: традиционный китайский, русский языковой пакет, улучшения системы плагинов. Пока не выпущена.",
+            "dl.dev.btn": "Пока недоступно",
+            "dl.notice": "Вы скачиваете установщик v1.0-Snapshot-1. Дважды щёлкните FireToolboxInstaller.jar, чтобы открыть мастер установки; после установки на рабочем столе появится ярлык «Fire Toolbox». v1.0-Snapshot-2 появится здесь после готовности.",
+            "install.title": "Шаги установки",
+            "install.s1": "Убедитесь, что установлена Java 11 или новее (JDK или JRE — она нужна и установщику, и программе).",
+            "install.s2": "Скачайте FireToolboxInstaller.jar.",
+            "install.s3": "Дважды щёлкните jar. Выберите папку установки (по умолчанию %LOCALAPPDATA%\\FireToolbox).",
+            "install.s4": "Нажмите «Установить» и дождитесь завершения. Установщик распакует файлы и создаст 启动.bat.",
+            "install.s5": "При включённом «Создать ярлык на рабочем столе» появится ярлык «Fire Toolbox». Отметьте «Запустить после установки», чтобы открыть программу сразу.",
+            "req.title": "Требования",
+            "req.s1": "ОС: Windows 10/11 (на других системах jar запускается вручную).",
+            "req.s2": "Java: 11 или новее, доступная из командной строки.",
+            "req.s3": "Диск: ~20 МБ для папки установки (включая ресурсы и языковой пакет).",
+            "req.s4": "Если двойной щелчок по jar ничего не делает — проверьте, что .jar связан с javaw.exe.",
+            "faq.title": "Частые вопросы",
+            "faq.q1.title": "Двойной щелчок по jar ничего не делает?",
+            "faq.q1.desc": "Скорее всего, .jar не связан с Java. Правый щелчок по jar → «Открыть с помощью» → выберите javaw.exe из JDK/JRE и отметьте «Всегда открывать .jar этим приложением».",
+            "faq.q2.title": "После установки программа падает?",
+            "faq.q2.desc": "Проверьте, что в папке установки есть Config.ini. Программа требует его наличия; без него она намеренно падает и пишет resources/log/crash.log.",
+            "faq.q3.title": "Как сменить язык?",
+            "faq.q3.desc": "Откройте программу → «Настройки» → «Язык». Доступны упрощённый и традиционный китайский, английский и русский. Нажмите «Сохранить» — выбор запишется в Config.ini.",
+            "faq.q4.title": "Как удалить программу?",
+            "faq.q4.desc": "Удалите папку установки и ярлык «Fire Toolbox» с рабочего стола. Программа не пишет файлы в другие места.",
+            "footer.publish": "Текущий выпуск",
+            "footer.next": "Следующая версия",
+            "footer.dev": "в разработке, пока не выпущена"
+        }
+    };
+
+    function applyLang(code) {
+        const dict = I18N[code] || I18N.zh_cn;
+
+        document.documentElement.lang =
+            code === "zh_tw" ? "zh-Hant" :
+                code === "zh_cn" ? "zh-Hans" :
+                    code === "ru"    ? "ru" :
+                        "en";
+
+        document.querySelectorAll("[data-i18n]").forEach(el => {
+            const key = el.getAttribute("data-i18n");
+            const value = dict[key];
+            if (typeof value === "string") el.innerHTML = value;
+        });
+
+        try { localStorage.setItem("ftb_site_lang", code); } catch (e) {}
+        document.getElementById("langSelect").value = code;
+    }
+
+    function setupDownload() {
+        const link = document.getElementById("dlStable");
+        link.href = DOWNLOAD_URL;
+        link.setAttribute("download", "");
+
+        link.addEventListener("click", async (e) => {
+            try {
+                const resp = await fetch(DOWNLOAD_URL, { method: "HEAD", cache: "no-store" });
+                if (!resp.ok) throw new Error("HTTP " + resp.status);
+            } catch (err) {
+                if (location.protocol.startsWith("http")) {
+                    e.preventDefault();
+                    alert(
+                        "下载文件暂不可用：\n" + DOWNLOAD_URL +
+                        "\n\n请确认 FireToolboxInstaller.jar 已放置在站点目录中。"
+                    );
+                }
+            }
+        });
+    }
+
+    (function init() {
+        const url = new URLSearchParams(location.search);
+        const urlLang = url.get("lang");
+
+        let code = "zh_cn";
+        if (urlLang && I18N[urlLang]) {
+            code = urlLang;
+        } else {
+            try {
+                const saved = localStorage.getItem("ftb_site_lang");
+                if (saved && I18N[saved]) code = saved;
+            } catch (e) {}
+            if (!I18N[code]) code = "zh_cn";
+        }
+
+        document.getElementById("langSelect").addEventListener("change", (e) => {
+            applyLang(e.target.value);
+        });
+
+        applyLang(code);
+        setupDownload();
+    })();
+</script>
+</body>
+</html>
