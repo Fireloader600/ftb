@@ -53,7 +53,7 @@
         }
 
         .logo img {
-            height: 36px; /* 稍微调大了高度，让Logo更清晰 */
+            height: 36px;
             width: auto;
             max-width: 150px;
             border-radius: 6px;
@@ -89,14 +89,14 @@
             font-size: 1.2rem;
             color: #666;
             margin-bottom: 40px;
-            max-width: 600px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
 
         /* Downloads Section */
         .downloads {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 40px 20px;
             flex: 1;
@@ -111,8 +111,9 @@
 
         .version-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
+            margin-bottom: 50px;
         }
 
         .version-card {
@@ -133,11 +134,10 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
-        .snapshot-badge {
+        .badge {
             position: absolute;
             top: 15px;
-            right: -30px;
-            background-color: #FFB020;
+            right: -35px;
             color: #fff;
             font-size: 0.8rem;
             font-weight: bold;
@@ -145,6 +145,9 @@
             transform: rotate(45deg);
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
+
+        .badge-snapshot { background-color: #FFB020; }
+        .badge-beta { background-color: #10B981; }
 
         .version-card h3 {
             font-size: 1.5rem;
@@ -156,6 +159,17 @@
             color: #666;
             margin-bottom: 25px;
             flex: 1;
+        }
+
+        .version-card .version-features {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .version-card .version-features li {
+            margin-bottom: 5px;
         }
 
         .btn-download {
@@ -189,6 +203,61 @@
             color: white;
         }
 
+        /* Backup Download Section */
+        .backup-section {
+            background-color: #E0F2FE;
+            border: 1px solid #BAE6FD;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .backup-section h3 {
+            color: #0369A1;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .backup-section p {
+            color: #0C4A6E;
+            margin-bottom: 20px;
+        }
+
+        .pwd-code {
+            background-color: #fff;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--primary-color);
+            border: 1px solid #BAE6FD;
+            font-size: 1.1em;
+            margin-left: 5px;
+            cursor: pointer;
+            user-select: all;
+        }
+
+        .btn-backup {
+            display: inline-block;
+            background-color: #0EA5E9;
+            color: white;
+            text-decoration: none;
+            padding: 12px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-backup:hover {
+            background-color: #0284C7;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -203,7 +272,6 @@
 
 <header>
     <div class="logo">
-        <!-- 将 src 替换为你自己的 png 文件路径，比如 logo.png -->
         <img src="logo.png" alt="Fire工具箱 Logo">
         Fire工具箱
     </div>
@@ -215,34 +283,65 @@
 
 <section class="hero">
     <h1>打造你的专属工具集合</h1>
-    <p>Fire工具箱集成了图片管理、软件下载、代码运行、自定义弹窗等丰富功能，为你提供高效便捷的桌面体验。</p>
-    <a href="#downloads" class="btn-download" style="width: auto; padding: 12px 40px;">立即下载</a>
+    <p>Fire工具箱现已支持 Fire 语言编译器、Minecraft DevKit 启动器、高级加密盘（含密码恢复）、自定义弹窗编辑器、压缩包管理器等重磅功能。为你提供极致高效便捷的桌面体验。</p>
+    <a href="#downloads" class="btn-download" style="width: auto; padding: 12px 40px;">立即下载最新版</a>
 </section>
 
 <section id="downloads" class="downloads">
-    <h2 class="section-title">快照版下载</h2>
+    <h2 class="section-title">版本下载</h2>
     <div class="version-grid">
 
-        <!-- Snapshot 1 -->
+        <!-- Beta 1 (最新版) -->
         <div class="version-card">
-            <div class="snapshot-badge">快照版</div>
-            <h3>v1.0-Snapshot-1</h3>
-            <p class="version-desc">
-                初版快照。包含基础框架、图片浏览、软件下载、多语言设置与基础语言包系统。适合作为基础体验版本。
-            </p>
-            <a href="downloads/installer-1.0.0-Snapshot-1.jar" class="btn-download" download>下载 Snapshot-1</a>
+            <div class="badge badge-beta">测试版</div>
+            <h3>v1.0-beta-1 (最新)</h3>
+            <p class="version-desc">全新重磅更新，引入了全新编程语言支持和强大的扩展工具链。</p>
+            <ul class="version-features">
+                <li>🔥 全新 Fire 语言（编译器/解释器）</li>
+                <li>⛏️ Minecraft DevKit 启动器集成</li>
+                <li>🔐 高级加密盘（预览/文件夹/密码找回）</li>
+                <li>💥 全新崩溃恢复界面与日志系统</li>
+                <li>🎨 UI优化与多语言支持升级</li>
+            </ul>
+            <a href="downloads/installer-1.0.0-beta-1.jar" class="btn-download" download>下载 Beta 1</a>
         </div>
 
         <!-- Snapshot 2 -->
         <div class="version-card">
-            <div class="snapshot-badge">快照版</div>
+            <div class="badge badge-snapshot">快照版</div>
             <h3>v1.0-Snapshot-2</h3>
-            <p class="version-desc">
-                全新升级快照。新增了“所有工具”面板、看图工具、代码面板（AppleScript / FireScript）、自定义弹窗编辑器、压缩包管理器、视频播放与安全加密盘等重磅功能。
-            </p>
+            <p class="version-desc">引入多项基础工具的里程碑版本。</p>
+            <ul class="version-features">
+                <li>看图工具</li>
+                <li>自定义弹窗编辑器</li>
+                <li>压缩包管理器 (含 .fp 格式)</li>
+                <li>视频播放</li>
+                <li>安全加密盘初版</li>
+            </ul>
             <a href="downloads/installer-1.0.0-Snapshot-2.jar" class="btn-download secondary" download>下载 Snapshot-2</a>
         </div>
 
+        <!-- Snapshot 1 -->
+        <div class="version-card">
+            <div class="badge badge-snapshot">快照版</div>
+            <h3>v1.0-Snapshot-1</h3>
+            <p class="version-desc">初版快照，基础框架奠定。</p>
+            <ul class="version-features">
+                <li>基础框架与UI</li>
+                <li>图片浏览</li>
+                <li>软件下载</li>
+                <li>多语言设置系统</li>
+            </ul>
+            <a href="downloads/installer-1.0.0-Snapshot-1.jar" class="btn-download secondary" download>下载 Snapshot-1</a>
+        </div>
+
+    </div>
+
+    <!-- 备用下载地址 -->
+    <div class="backup-section">
+        <h3>☁️ 备用下载地址（蓝奏云）</h3>
+        <p>如果上方 GitHub 直链下载速度慢或无法访问，请使用备用地址。<br>提取密码：<span class="pwd-code" title="点击复制" onclick="navigator.clipboard.writeText('4grq'); alert('密码已复制：4grq');">4grq</span></p>
+        <a href="https://wwavo.lanzouq.com/b01bjv0mpg" target="_blank" class="btn-backup">前往蓝奏云下载</a>
     </div>
 </section>
 
